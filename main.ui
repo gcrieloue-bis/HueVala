@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="3.12"/>
+  <object class="GtkWindow" id="window">
+    <property name="can_focus">False</property>
+    <property name="border_width">10</property>
+    <property name="title" translatable="yes">Hue Application</property>
+    <property name="window_position">center</property>
+    <property name="default_width">800</property>
+    <property name="default_height">70</property>
+    <property name="icon_name">emblem-favorite</property>
+    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <child type="titlebar">
+          <object class="GtkHeaderBar" id="header">
+            <property name="visible">True</property>
+            <property name="show-close-button">True</property>
+            <property name="title">Hue manager</property>
+            <child>
+              <object class="GtkLabel" id="lines">
+                <property name="visible">False</property>
+              </object>
+              <packing>
+                <property name="pack-type">start</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="about">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkImage" id="gears-icon">
+                    <property name="visible">True</property>
+                    <property name="icon-name">emblem-system-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+          </object> <!--headerBar-->
+    </child>
+    <child>
+        <object class="GtkBox" id="hbox">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+             <child>
+                <object class="GtkTreeView" id="listLights">
+                    <property name="visible">True</property>
+                    <property name="width_request">100</property>
+                </object>
+             </child>
+             <child>
+                <object class="GtkBox" id="vbox">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">5</property>
+                    <property name="hexpand">True</property>
+                    <property name="margin">5</property>
+                    <child>
+                        <object class="GtkBox" id="switchbox">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">10</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Toutes les lampes</property>
+                                  </object>
+                               <packing>
+                                <property name="pack-type">start</property>
+                              </packing>
+                            </child>
+                            <child>
+			                    <object class="GtkSwitch" id="switchAll">
+			                    </object>
+			                    <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+			                </child>
+			                
+			            </object>
+		            </child> 
+		            <child><object class="GtkSeparator" /></child>
+		            <child>
+                        <object class="GtkBox" id="switchLightBox">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">10</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Lampe</property>
+                                  </object>
+                                   <packing>
+                                    <property name="pack-type">start</property>
+                                  </packing>
+                            </child>
+                            <child>
+			                    <object class="GtkSwitch" id="switchLight">
+			                    </object>
+			                    <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+			                </child>
+			                
+			            </object><!--switchLightBox-->
+		            </child> 
+                    <child>
+		                <object class="GtkBox" id="colorBox">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">10</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Couleur</property>
+                                  </object>
+                                   <packing>
+                                    <property name="pack-type">start</property>
+                                  </packing>
+                            </child>
+                            <child>
+                                <object class="GtkColorButton" id="colorButton">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                </object>
+                                <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+                            </child>
+                        </object><!--colorBox-->
+                    </child>
+                     <child><object class="GtkSeparator" /></child>
+		            <child>
+		                <object class="GtkBox" id="scaleBox">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">50</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Luminosité</property>
+                                  </object>
+                                   <packing>
+                                    <property name="pack-type">start</property>
+                                  </packing>
+                            </child>
+                            <child>
+                                <object class="GtkAdjustment" id="adjustment">
+                                    <property name="upper">255</property>
+                                    <property name="step_increment">5</property>
+                                    <property name="page_increment">10</property>
+                                </object>
+                                <object class="GtkScale" id="scale">
+                                   <property name="orientation">horizontal</property> 
+                                   <property name="hexpand">True</property>
+                                   <property name="draw_value">False</property>
+                                   <property name="fill_level">6000</property>
+                                   <property name="adjustment">adjustment</property>
+                                </object>
+                                <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+                            </child>
+                        </object><!--scaleBox-->
+                        </child>
+		            <child>
+		                <object class="GtkBox" id="scaleBoxHue">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">50</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Hue</property>
+                                  </object>
+                                   <packing>
+                                    <property name="pack-type">start</property>
+                                  </packing>
+                            </child>
+                            <child>
+                                <object class="GtkAdjustment" id="adjustmentHue">
+                                    <property name="upper">65535</property>
+                                    <property name="step_increment">5</property>
+                                    <property name="page_increment">10</property>
+                                    
+                                </object>
+                                <object class="GtkScale" id="scaleHue">
+                                   <property name="orientation">horizontal</property> 
+                                   <property name="hexpand">True</property>
+                                   <property name="draw_value">False</property>
+                                   <property name="fill_level">65535</property>
+                                   <property name="adjustment">adjustmentHue</property>
+                                </object>
+                                <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+                            </child>
+                        </object><!--scaleBoxHue-->
+                    </child>
+		            <child>
+		                <object class="GtkBox" id="scaleBoxSat">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">50</property>
+                            <child>
+                                <object class="GtkLabel">
+                                    <property name="visible">False</property>
+                                    <property name="label">Saturation</property>
+                                  </object>
+                                   <packing>
+                                    <property name="pack-type">start</property>
+                                  </packing>
+                            </child>
+                            <child>
+                                <object class="GtkAdjustment" id="adjustmentSat">
+                                    <property name="upper">255</property>
+                                    <property name="step_increment">5</property>
+                                    <property name="page_increment">10</property>
+                                </object>
+                                  <object class="GtkScale" id="scaleSat">
+                                    <property name="orientation">horizontal</property> 
+                                   <property name="hexpand">True</property>
+                                   <property name="draw_value">False</property>
+                                   <property name="fill_level">65535</property>
+                                   <property name="adjustment">adjustmentSat</property>
+                                  </object>
+                                <packing>
+                                    <property name="pack-type">end</property>
+                                </packing>
+                            </child>
+                        </object><!--scaleBoxSat-->
+                    </child>
+                </object><!--vbox-->
+            </child>
+        </object><!--hbox-->
+    </child>
+</object><!--window-->
+</interface>
