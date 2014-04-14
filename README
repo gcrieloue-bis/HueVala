@@ -1,1 +1,11 @@
-This program uses Vala and GTK+ 3.12 for controlling Philips Hue.
+Philips Hue Controller
+
+======================
+Vala
+GTK 3.12
+======================
+
+
+To compile this program :
+
+valac --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libsoup-2.4 --pkg json-glib-1.0 main.vala hueManager.vala light.vala hueManagerUI.vala --pkg gee-1.0  -X -lm && ./main
