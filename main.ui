@@ -142,6 +142,7 @@
                                 <object class="GtkLabel">
                                     <property name="visible">False</property>
                                     <property name="label">Luminosité</property>
+                                    <property name="width_chars">10</property>
                                   </object>
                                    <packing>
                                     <property name="pack-type">start</property>
@@ -175,6 +176,7 @@
                                 <object class="GtkLabel">
                                     <property name="visible">False</property>
                                     <property name="label">Hue</property>
+                                    <property name="width_chars">10</property>
                                   </object>
                                    <packing>
                                     <property name="pack-type">start</property>
@@ -209,6 +211,7 @@
                                 <object class="GtkLabel">
                                     <property name="visible">False</property>
                                     <property name="label">Saturation</property>
+                                    <property name="width_chars">10</property>
                                   </object>
                                    <packing>
                                     <property name="pack-type">start</property>
