@@ -100,6 +100,7 @@ public class HueManagerUI {
 
 	public void on_treeview_selection_changed (TreeSelection selection) {
 
+
 		TreeIter iter;
 		TreeModel model;
 
@@ -107,25 +108,37 @@ public class HueManagerUI {
 		if (selection.get_selected (out model, out iter)) {
 			model.get (iter, 0, out name);
 		}
+		
+		if (name != "")
+        {
+		    stdout.printf("======================================================\n");
+		    stdout.printf("%s\n", name);
+		    stdout.printf("======================================================\n");
 
-		stdout.printf("%s\n", name);
-		Light light = hueManager.getByName(name);
-		if (light != null)
-		{
-			hueManager.refreshData(light.number);
-			currentLightNumber = light.number;
-			refreshColorButton();
-		    switchLight.set_sensitive(light.reachable);
-		    switchLight.set_active(light.on);
-		    stdout.printf("%f\n",light.hsl.lightness);
-			scale.set_value((int)Math.round(light.hsl.lightness));
-			scaleHue.set_value((int)Math.round(light.hsl.hue));
-			scaleSat.set_value((int)Math.round(light.hsl.saturation));
+		
+		    Light light = hueManager.getByName(name);
+		    if (light != null)
+		    {
+			    hueManager.refreshData(light.number);
+			    currentLightNumber = light.number;
+			    refreshColorButton();
+		        switchLight.set_sensitive(light.reachable);
+		        switchLight.set_active(light.on);
+		        stdout.printf("Light number %s : %s\n", light.number, light.on ? "on":"off");
+		        scale.set_sensitive(light.reachable);
+		        scaleHue.set_sensitive(light.reachable);
+		        scaleSat.set_sensitive(light.reachable);
+		        colorButton.set_sensitive(light.reachable);
+			    scale.set_value((int)Math.round(light.hsl.lightness));
+			    scaleHue.set_value((int)Math.round(light.hsl.hue));
+			    scaleSat.set_value((int)Math.round(light.hsl.saturation));
+		    }
+		    else {
+		         stdout.printf("%s : non trouvé\n", name);
+		    }
 		}
 	}
 	
-	
-
 	// alimente la liste des lampes
 	public void populateLightlist(TreeView listLights) {
 

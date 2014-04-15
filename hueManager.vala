@@ -233,7 +233,7 @@ public class HueManager {
 	
 	public void setColor(string number, RGB rgb)
 	{
-	stdout.printf("setColor_r,g,b(%f;%f;%f)\n", rgb.red, rgb.green, rgb.blue);
+	    stdout.printf("setColor_r,g,b(%f;%f;%f)\n", rgb.red, rgb.green, rgb.blue);
         HSL hsl = rgbToHsl(rgb.red, rgb.green, rgb.blue);
 		var uri = "http://%s/api/hellsdarkHUE/lights/%s/state".printf(IP,number);
 
@@ -242,7 +242,7 @@ public class HueManager {
         lightHsl.saturation = hsl.saturation;
         lightHsl.lightness = hsl.lightness;
 
-		stdout.printf ("API = %s\n",uri);
+		stdout.printf ("=> API = %s\n",uri);
 		string mycontent = "test";
 		var session = new Soup.Session();
 		var message = new Soup.Message("PUT",uri);
@@ -282,10 +282,10 @@ public class HueManager {
 		
 		getByNumber(number).hsl.lightness = brightness;
 
-		stdout.printf ("API = %s\n",uri);
+		stdout.printf ("=> API = %s\n",uri);
 		var session = new Soup.Session();
 		var message = new Soup.Message("PUT",uri);
-		var body = "{\"bri\":%d}".printf(brightness);
+		var body = "{\"bri\":%d}\n".printf(brightness);
 		
 		stdout.printf(body);
 		message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
@@ -298,7 +298,7 @@ public class HueManager {
 		
 		getByNumber(number).hsl.saturation = saturation;
 
-		stdout.printf ("API = %s\n",uri);
+		stdout.printf ("=> API = %s\n",uri);
 		var session = new Soup.Session();
 		var message = new Soup.Message("PUT",uri);
 		var body = "{\"sat\":%d}".printf(saturation);
@@ -314,7 +314,7 @@ public class HueManager {
 
         getByNumber(number).hsl.hue = hue;
 
-		stdout.printf ("API = %s\n",uri);
+		stdout.printf ("=> API = %s\n",uri);
 		var session = new Soup.Session();
 		var message = new Soup.Message("PUT",uri);
 		var body = "{\"hue\":%d}".printf(hue);
@@ -328,7 +328,7 @@ public class HueManager {
 	{
 		var uri = "http://%s/api/hellsdarkHUE/lights/%s".printf(IP,number);
 
-		stdout.printf ("API = %s\n",uri);
+		stdout.printf ("=> API = %s\n",uri);
 
 		Light light = this.getByNumber(number);
 
