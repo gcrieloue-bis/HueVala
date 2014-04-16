@@ -23,13 +23,9 @@ public class HueManagerUI {
 		window = buildWindow();
 	}
 
-
 	// Construit la fenêtre
 	public Window buildWindow(){
-
 		hueManager = new HueManager();
-
-		//hueManager.GetLights();
 
 		var builder = new Builder ();
 		builder.add_from_file ("main.ui");
@@ -60,6 +56,7 @@ public class HueManagerUI {
 		
 		populateLightlist(listLights);
 		builder.connect_signals (this);
+		
 		return window;
 	}
 
@@ -99,8 +96,6 @@ public class HueManagerUI {
 	}
 
 	public void on_treeview_selection_changed (TreeSelection selection) {
-
-
 		TreeIter iter;
 		TreeModel model;
 
@@ -141,7 +136,6 @@ public class HueManagerUI {
 	
 	// alimente la liste des lampes
 	public void populateLightlist(TreeView listLights) {
-
 		var listmodel = new Gtk.ListStore (1, typeof (string));
 
 		var selection = listLights.get_selection ();

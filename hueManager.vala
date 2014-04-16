@@ -42,6 +42,12 @@ public class HueManager {
     public const string IP = "192.168.1.27";
 	public const double MAX_HUE = 65535.0;
 	public const double MAX_SAT_BRI = 255.0;
+	//public const string USERNAME = "hellsdarkHue";
+	public const double MIN_TIME_BETWEEN_STATE_CHANGE = -200000;
+	
+	public ArrayList<Light> lights = new ArrayList<Light>();
+	
+	public DateTime lastStateChangeDate;
 
 	public double convertToRangeZeroOne(double value, double max){
 		return value/max;
@@ -154,11 +160,6 @@ public class HueManager {
 		return new RGB(r,g,b);
 	}
 
-	public 	ArrayList<Light> lights = new ArrayList<Light>();
-
-	
-	//public const string USERNAME = "hellsdarkHue";
-
 	/// récupère les lampes disponibles
 	public ArrayList<Light> getLights (){
 
@@ -235,25 +236,25 @@ public class HueManager {
 	{
 	    stdout.printf("setColor_r,g,b(%f;%f;%f)\n", rgb.red, rgb.green, rgb.blue);
         HSL hsl = rgbToHsl(rgb.red, rgb.green, rgb.blue);
-		var uri = "http://%s/api/hellsdarkHUE/lights/%s/state".printf(IP,number);
-
         HSL lightHsl = getByNumber(number).hsl;
         lightHsl.hue = hsl.hue;
         lightHsl.saturation = hsl.saturation;
         lightHsl.lightness = hsl.lightness;
+                
+	    var uri = "http://%s/api/hellsdarkHUE/lights/%s/state".printf(IP,number);
 
-		stdout.printf ("=> API = %s\n",uri);
-		string mycontent = "test";
-		var session = new Soup.Session();
-		var message = new Soup.Message("PUT",uri);
-		var body = "{\"hue\":%d,\"sat\":%d,\"bri\":%d}".printf(
-		    (int)Math.round(hsl.hue), 
-		    (int)Math.round(hsl.saturation),
-		    (int)Math.round(hsl.lightness));
-		
-		stdout.printf(body);
-		message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
-		session.send_message (message);
+	    stdout.printf ("=> API = %s\n",uri);
+	    string mycontent = "test";
+	    var session = new Soup.Session();
+	    var message = new Soup.Message("PUT",uri);
+	    var body = "{\"hue\":%d,\"sat\":%d,\"bri\":%d}".printf(
+	        (int)Math.round(hsl.hue), 
+	        (int)Math.round(hsl.saturation),
+	        (int)Math.round(hsl.lightness));
+	
+	    stdout.printf(body);
+	    message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
+	    session.send_message (message);
 	}
 
 	public Light getByName(string name){
@@ -278,18 +279,26 @@ public class HueManager {
 	
 	public void setBrightness(string number, int brightness)
 	{  
-		var uri = "http://%s/api/hellsdarkHUE/lights/%s/state".printf(IP,number);
-		
-		getByNumber(number).hsl.lightness = brightness;
+	    getByNumber(number).hsl.lightness = brightness;
+	    
+	    if (this.lastStateChangeDate == null)
+	    {
+	        this.lastStateChangeDate = new DateTime.now_local();
+	    }
+	    if (this.lastStateChangeDate.difference(new DateTime.now_local()) < MIN_TIME_BETWEEN_STATE_CHANGE)
+        {
+            this.lastStateChangeDate = new DateTime.now_local();
+		    var uri = "http://%s/api/hellsdarkHUE/lights/%s/state".printf(IP,number);
 
-		stdout.printf ("=> API = %s\n",uri);
-		var session = new Soup.Session();
-		var message = new Soup.Message("PUT",uri);
-		var body = "{\"bri\":%d}\n".printf(brightness);
+		    stdout.printf ("=> API = %s\n",uri);
+		    var session = new Soup.Session();
+		    var message = new Soup.Message("PUT",uri);
+		    var body = "{\"bri\":%d}\n".printf(brightness);
 		
-		stdout.printf(body);
-		message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
-		session.send_message (message);
+		    stdout.printf(body);
+		    message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
+		    session.send_message (message);
+		}
 	}
 	
 	public void setSaturation(string number, int saturation)
@@ -298,14 +307,21 @@ public class HueManager {
 		
 		getByNumber(number).hsl.saturation = saturation;
 
-		stdout.printf ("=> API = %s\n",uri);
-		var session = new Soup.Session();
-		var message = new Soup.Message("PUT",uri);
-		var body = "{\"sat\":%d}".printf(saturation);
+        if (this.lastStateChangeDate == null)
+	    {
+	        this.lastStateChangeDate = new DateTime.now_local();
+	    }
+	    if (this.lastStateChangeDate.difference(new DateTime.now_local()) < MIN_TIME_BETWEEN_STATE_CHANGE)
+        {
+		    stdout.printf ("=> API = %s\n",uri);
+		    var session = new Soup.Session();
+		    var message = new Soup.Message("PUT",uri);
+		    var body = "{\"sat\":%d}".printf(saturation);
 		
-		stdout.printf("%s\n",body);
-		message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
-		session.send_message (message);
+		    stdout.printf("%s\n",body);
+		    message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
+		    session.send_message (message);
+		}
 	}
 	
 	public void setHue(string number, int hue)
@@ -314,14 +330,21 @@ public class HueManager {
 
         getByNumber(number).hsl.hue = hue;
 
-		stdout.printf ("=> API = %s\n",uri);
-		var session = new Soup.Session();
-		var message = new Soup.Message("PUT",uri);
-		var body = "{\"hue\":%d}".printf(hue);
+        if (this.lastStateChangeDate == null)
+	    {
+	        this.lastStateChangeDate = new DateTime.now_local();
+	    }
+	    if (this.lastStateChangeDate.difference(new DateTime.now_local()) < MIN_TIME_BETWEEN_STATE_CHANGE)
+        {
+		    stdout.printf ("=> API = %s\n",uri);
+		    var session = new Soup.Session();
+		    var message = new Soup.Message("PUT",uri);
+		    var body = "{\"hue\":%d}".printf(hue);
 		
-		stdout.printf("%s\n",body);
-		message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
-		session.send_message (message);
+		    stdout.printf("%s\n",body);
+		    message.set_request("application/json", Soup.MemoryUse.COPY, body.data);
+		    session.send_message (message);
+		}
 	}
 
 	public Light refreshData(string number)
