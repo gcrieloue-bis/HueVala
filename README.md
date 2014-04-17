@@ -4,10 +4,24 @@
 
 ======================
 
-##Developed with :
+##Developed for Gnome 3.12+ with :
 * Vala
 * GTK 3.12
 
+##Features
+* All lights on/off
+* specific light on/off
+* specific light brightness change
+* specific light hue change
+* specific light saturation change
+* specific light color change
+
+##TODO
+* Bridge discovery
+* User auto-creation
+* Add colorloop effect
+* Add group management
+* Add scheduler 
 
 ##To compile this program :
 

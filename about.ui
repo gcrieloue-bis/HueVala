@@ -14,7 +14,7 @@
     <property name="copyright" translatable="yes">Gilles CRIELOUE</property>
     <property name="authors">Gilles CRIELOUE</property>
     <property name="logo_icon_name">emblem-favorite</property>
-    <property name="license_type">gpl-3-0</property>
+    <property name="license_type">mit-x11</property>
     <property name="skip-pager-hint">True</property>
     <property name="skip-taskbar-hint">True</property>
     <child internal-child="vbox">
